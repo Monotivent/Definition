@@ -1,0 +1,125 @@
+public System.Data.Objects.ObjectQuery<T> Include (string path);
+
+using (AdventureWorksEntities context =
+    new AdventureWorksEntities())
+{
+    // Define an object query with a path that returns
+    // orders and items for a specific contact.
+    Contact contact =
+        context.Contacts.Include("SalesOrderHeaders.SalesOrderDetails")
+        .FirstOrDefault();
+
+    // Execute the query and display information for each item
+    // in the orders that belong to the first contact.
+    foreach (SalesOrderHeader order in contact
+        .SalesOrderHeaders)
+    {
+        Console.WriteLine(String.Format("PO Number: {0}",
+            order.PurchaseOrderNumber));
+        Console.WriteLine(String.Format("Order Date: {0}",
+            order.OrderDate.ToString()));
+        Console.WriteLine("Order items:");
+        foreach (SalesOrderDetail item in order.SalesOrderDetails)
+        {
+            Console.WriteLine(String.Format("Product: {0} "
+                + "Quantity: {1}", item.ProductID.ToString(),
+                item.OrderQty.ToString()));
+        }
+    }
+}
+
+// Create a SalesOrderHeader query with two query paths,
+// one that returns order items and a second that returns the
+// billing and shipping addresses for each order.
+ObjectQuery<SalesOrderHeader> query =
+    context.SalesOrderHeaders.Include("SalesOrderDetails").Include("Address");
+    
+    
+
+[System.Serializable]
+[System.Runtime.InteropServices.ComVisible(true)]
+public sealed class String : ICloneable, IComparable, IComparable<string>, IConvertible, IEquatable<string>, System.Collections.Generic.IEnumerable<char>
+
+string string1 = "This is a string created by assignment.";
+Console.WriteLine(string1);
+string string2a = "The path is C:\\PublicDocuments\\Report1.doc";
+Console.WriteLine(string2a);
+string string2b = @"The path is C:\PublicDocuments\Report1.doc";
+Console.WriteLine(string2b);
+// The example displays the following output:
+//       This is a string created by assignment.
+//       The path is C:\PublicDocuments\Report1.doc
+//       The path is C:\PublicDocuments\Report1.doc
+
+char[] chars = { 'w', 'o', 'r', 'd' };
+sbyte[] bytes = { 0x41, 0x42, 0x43, 0x44, 0x45, 0x00 };
+
+// Create a string from a character array.
+string string1 = new string(chars);
+Console.WriteLine(string1);
+
+// Create a string that consists of a character repeated 20 times.
+string string2 = new string('c', 20);
+Console.WriteLine(string2);
+
+string stringFromBytes = null;
+string stringFromChars = null;
+unsafe
+{
+   fixed (sbyte* pbytes = bytes)
+   {
+      // Create a string from a pointer to a signed byte array.
+      stringFromBytes = new string(pbytes);
+   }
+   fixed (char* pchars = chars)
+   {
+      // Create a string from a pointer to a character array.
+      stringFromChars = new string(pchars);
+   }
+}
+Console.WriteLine(stringFromBytes);
+Console.WriteLine(stringFromChars);
+// The example displays the following output:
+//       word
+//       cccccccccccccccccccc
+//       ABCDE
+//       word
+
+string string1 = "Today is " + DateTime.Now.ToString("D") + ".";
+Console.WriteLine(string1);
+
+string string2 = "This is one sentence. " + "This is a second. ";
+string2 += "This is a third sentence.";
+Console.WriteLine(string2);
+// The example displays output like the following:
+//    Today is Monday, Octomber 06, 2022.
+//    This is one sentence. This is a second. This is a third sentence.
+
+string sentence = "This sentence has five words.";
+// Extract the second word.
+int startPosition = sentence.IndexOf(" ") + 1;
+string word2 = sentence.Substring(startPosition,
+                                  sentence.IndexOf(" ", startPosition) - startPosition);
+Console.WriteLine("Second word: " + word2);
+// The example displays the following output:
+//       Second word: sentence
+
+DateTime dateAndTime = new DateTime(2011, 7, 6, 7, 32, 0);
+double temperature = 68.3;
+string result = String.Format("At {0:t} on {0:D}, the temperature was {1:F1} degrees Fahrenheit.",
+                              dateAndTime, temperature);
+Console.WriteLine(result);
+// The example displays the following output:
+//       At 7:32 AM on Wednesday, July 06, 2011, the temperature was 68.3 degrees Fahrenheit.
+
+string surrogate = "\uD800\uDC03";
+for (int ctr = 0; ctr < surrogate.Length; ctr++) 
+   Console.Write($"U+{(ushort)surrogate[ctr]:X2} ");
+
+Console.WriteLine();
+Console.WriteLine("   Is Surrogate Pair: {0}", 
+                  Char.IsSurrogatePair(surrogate[0], surrogate[1]));
+// The example displays the following output:
+//       U+D800 U+DC03
+//          Is Surrogate Pair: True
+
